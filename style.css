@@ -1,0 +1,330 @@
+:root {
+    --primary-color: #0f172a; /* Deep Navy - Trust */
+    --accent-color: #f59e0b; /* Amber - Attention */
+    --text-light: #f8fafc;
+    --text-dark: #1e293b;
+    --bg-light: #ffffff;
+    --bg-off-white: #f1f5f9;
+    --font-main: 'Outfit', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    color: var(--text-dark);
+    line-height: 1.6;
+    background-color: var(--bg-light);
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5%;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 400;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+}
+
+.nav-cta {
+    background-color: var(--accent-color);
+    color: var(--primary-color) !important;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: transform 0.2s;
+}
+
+.nav-cta:hover {
+    transform: scale(1.05);
+}
+
+/* Hero Section */
+.hero {
+    height: 90vh;
+    background: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-light);
+    padding: 0 1rem;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    margin-bottom: 2.5rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    padding: 1.2rem 3rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: transform 0.3s, background-color 0.3s;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    background-color: #d97706;
+}
+
+/* Features */
+.features {
+    padding: 5rem 5%;
+    text-align: center;
+    background-color: var(--bg-off-white);
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    color: #64748b;
+    margin-bottom: 3rem;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card .icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.feature-card p {
+    font-size: 1.1rem;
+    color: #475569;
+}
+
+/* Destinations */
+.destinations {
+    padding: 5rem 5%;
+}
+
+.destinations h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--primary-color);
+}
+
+.destination-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.destination-card {
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.destination-card img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.destination-card:hover img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    padding: 2rem;
+    color: white;
+}
+
+.card-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-content p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+/* Booking Section */
+.booking-section {
+    padding: 5rem 5%;
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+}
+
+.booking-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.booking-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.booking-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 1.5rem;
+    align-items: end;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-dark);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-family: var(--font-main);
+}
+
+.submit-btn {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    border: none;
+    padding: 0.9rem 2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #d97706;
+}
+
+/* Footer */
+.footer {
+    background-color: #020617;
+    color: white;
+    padding: 3rem 5%;
+    text-align: center;
+}
+
+.footer-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+.footer-info {
+    font-size: 1.1rem;
+    color: #94a3b8;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .nav-links {
+        display: none; /* In production would perform mobile menu */
+    }
+    
+    .booking-form {
+        grid-template-columns: 1fr;
+    }
+}
