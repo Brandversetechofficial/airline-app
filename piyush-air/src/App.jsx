@@ -80,7 +80,9 @@ function App() {
       { name: "Paris (CDG)", lat: 48.8566, lon: 2.3522 },
       { name: "Singapore (SIN)", lat: 1.3521, lon: 103.8198 },
       { name: "Rome (FCO)", lat: 41.9028, lon: 12.4964 },
-      { name: "Bali (DPS)", lat: -8.4095, lon: 115.1889 }
+      { name: "Bali (DPS)", lat: -8.4095, lon: 115.1889 },
+      { name: "Istanbul (IST)", lat: 41.0082, lon: 28.9784 },
+      { name: "Seoul (ICN)", lat: 37.5665, lon: 126.9780 }
     ];
 
     const generateFlights = async () => {
@@ -282,6 +284,24 @@ function App() {
               <h3>New York: Taming the Apple</h3>
               <p style={{ fontSize: '1rem', marginTop: '0.5rem', fontStyle: 'italic' }}>
                 "Walking Central Park with the family in tow. You showed the kids where the real business happens on Wall Street, while Mrs. Sharma conquered 5th Avenue."
+              </p>
+            </div>
+          </div>
+          <div className="destination-card">
+            <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=800&q=80" alt="Istanbul" />
+            <div className="card-content">
+              <h3>Istanbul: The Bosphorus Baron</h3>
+              <p style={{ fontSize: '1rem', marginTop: '0.5rem', fontStyle: 'italic' }}>
+                "Sipping tea on the Europe side, looking at Asia. You explained the history of empires to the kids while Mrs. Sharma found the best spices in the Grand Bazaar."
+              </p>
+            </div>
+          </div>
+          <div className="destination-card">
+            <img src="https://images.unsplash.com/photo-1548115184-bc6544d06a58?auto=format&fit=crop&w=800&q=80" alt="Seoul" />
+            <div className="card-content">
+              <h3>Seoul: K-Pop King</h3>
+              <p style={{ fontSize: '1rem', marginTop: '0.5rem', fontStyle: 'italic' }}>
+                "Gangnam Style was cool, but your barbecue skills were the real hit. The family explored ancient palaces, and you navigated the subway system better than the locals."
               </p>
             </div>
           </div>
