@@ -120,19 +120,36 @@ function App() {
   const [destination, setDestination] = useState("");
   const [travelDate, setTravelDate] = useState("");
 
-  const handleCommandeer = (e) => {
-    e.preventDefault();
+  // Search Handlers
+  const handleSearch = (engine) => {
     if (!destination) {
-      alert("Please specify a destination for Mr. Sharma's Jet.");
+      alert("Please specify a destination, Captain.");
       return;
     }
 
-    // Construct Google Flights Deep Link
-    // Format: https://www.google.com/travel/flights?q=Flights+to+London+from+Toronto+on+2024-12-25
-    const query = `Flights to ${destination} from ${origin} on ${travelDate}`;
-    const url = `https://www.google.com/travel/flights?q=${encodeURIComponent(query)}`;
+    let url = '';
+    const encodedOrigin = encodeURIComponent(origin);
+    const encodedDest = encodeURIComponent(destination);
 
-    // Open in new tab
+    switch (engine) {
+      case 'google':
+        // Google Flights
+        url = `https://www.google.com/travel/flights?q=Flights+to+${encodedDest}+from+${encodedOrigin}+on+${travelDate}`;
+        break;
+      case 'kayak':
+        // Kayak - Smart Text Search
+        // Format roughly: https://www.kayak.com/flights/Origin-Dest/Date
+        // Note: Kayak usually prefers codes, but text often redirects to city selection which is still faster than typing blank.
+        url = `https://www.kayak.com/flights/${encodedOrigin}-${encodedDest}/${travelDate}`;
+        break;
+      case 'expedia':
+        // Expedia
+        url = `https://www.expedia.com/Flights-Search?flight-type=oneway&mode=search&trip=oneway&leg1=from:${encodedOrigin},to:${encodedDest},departure:${travelDate}&passengers=children:0,adults:1`;
+        break;
+      default:
+        return;
+    }
+
     window.open(url, '_blank');
   };
 
@@ -155,7 +172,7 @@ function App() {
           <li><a href="#live-board">🔴 Live Status</a></li>
           <li><a href="#stats">Legend Stats</a></li>
           <li><a href="#destinations">Family Tales</a></li>
-          <li><a href="#book" className="nav-cta">Commandeer Jet</a></li>
+          <li><a href="#book" className="nav-cta">Find Deals</a></li>
         </ul>
       </nav>
 
@@ -165,7 +182,7 @@ function App() {
           <div className="hero-badge">Verified Legend • Canada's Pride 🇨🇦</div>
           <h1>The World Awaits,<br />Mr. Piyush Sharma.</h1>
           <p>From the bustling streets of Bangkok to the cafes of Paris. The East and West are calling. Mrs. Sharma and the kids are ready for the ultimate tour.</p>
-          <a href="#book" className="cta-button">Global Takeoff, Dad!</a>
+          <a href="#book" className="cta-button">Compare Flight Prices</a>
         </div>
         <div className="hero-overlay"></div>
       </header>
@@ -311,8 +328,11 @@ function App() {
       {/* Booking */}
       <section id="book" className="booking-section">
         <div className="booking-container">
-          <h2>Chart Your Next Course, Mr. Sharma</h2>
-          <form className="booking-form" onSubmit={handleCommandeer}>
+          <h2>Smart Price Scanner 📉</h2>
+          <p style={{ marginBottom: '2rem', color: '#94a3b8' }}>
+            Compare prices across the top 3 global engines instantly. Don't let the airlines overcharge you, Sir.
+          </p>
+          <div className="booking-form">
             <div className="form-group">
               <label htmlFor="from">Departing From</label>
               <input
@@ -320,7 +340,7 @@ function App() {
                 id="from"
                 value={origin}
                 onChange={(e) => setOrigin(e.target.value)}
-                placeholder="City or Airport"
+                placeholder="City (e.g. Toronto)"
               />
             </div>
             <div className="form-group">
@@ -330,7 +350,7 @@ function App() {
                 id="to"
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
-                placeholder="Anywhere in the World"
+                placeholder="City (e.g. Delhi)"
               />
             </div>
             <div className="form-group">
@@ -342,10 +362,34 @@ function App() {
                 onChange={(e) => setTravelDate(e.target.value)}
               />
             </div>
-            <button type="submit" className="submit-btn">
-              Find Real Flights ✈️
-            </button>
-          </form>
+
+            <div style={{ gridColumn: '1 / -1', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
+              <button
+                type="button"
+                onClick={() => handleSearch('google')}
+                className="submit-btn"
+                style={{ background: 'linear-gradient(135deg, #4285F4 0%, #34A853 100%)', color: '#fff' }}
+              >
+                Scan Google ✈️
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSearch('kayak')}
+                className="submit-btn"
+                style={{ background: 'linear-gradient(135deg, #FF690F 0%, #ff4d00 100%)', color: '#fff' }}
+              >
+                Scan Kayak 🚤
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSearch('expedia')}
+                className="submit-btn"
+                style={{ background: 'linear-gradient(135deg, #00355f 0%, #002545 100%)', color: '#fff' }}
+              >
+                Scan Expedia 🏨
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
