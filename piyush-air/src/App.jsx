@@ -148,7 +148,7 @@ function App() {
 
       {/* Navigation */}
       <nav className="navbar">
-        <div className="logo">Piyush Air <span style={{ fontSize: '0.5em', color: 'var(--accent-color)' }}>Private & Exclusive</span></div>
+        <div className="logo">Piyush Air <span className="logo-badge">Private & Exclusive</span></div>
         <ul className="nav-links">
           <li><a href="#live-board">🔴 Live Status</a></li>
           <li><a href="#stats">Legend Stats</a></li>
@@ -322,7 +322,7 @@ function App() {
                 onChange={(e) => setTravelDate(e.target.value)}
               />
             </div>
-            <button type="submit" className="submit-btn" style={{ backgroundColor: '#f59e0b', color: '#0f172a' }}>
+            <button type="submit" className="submit-btn">
               Find Real Flights ✈️
             </button>
           </form>
