@@ -228,7 +228,7 @@ function App() {
           <li><a href="#live-board">🔴 Live Status</a></li>
           <li><a href="#stats">Legend Stats</a></li>
           <li><a href="#destinations">Family Tales</a></li>
-          <li><a href="#book" className="nav-cta">Find Deals</a></li>
+          <li><a href="#book" className="nav-cta">Commandeer Jet ✈️</a></li>
         </ul>
       </nav>
 
