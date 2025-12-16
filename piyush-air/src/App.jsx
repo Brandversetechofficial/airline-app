@@ -135,22 +135,78 @@ function App() {
       case 'google':
         // Google Flights
         url = `https://www.google.com/travel/flights?q=Flights+to+${encodedDest}+from+${encodedOrigin}+on+${travelDate}`;
+        window.open(url, '_blank');
         break;
       case 'kayak':
         // Kayak - Smart Text Search
-        // Format roughly: https://www.kayak.com/flights/Origin-Dest/Date
-        // Note: Kayak usually prefers codes, but text often redirects to city selection which is still faster than typing blank.
         url = `https://www.kayak.com/flights/${encodedOrigin}-${encodedDest}/${travelDate}`;
+        window.open(url, '_blank');
         break;
       case 'expedia':
         // Expedia
         url = `https://www.expedia.com/Flights-Search?flight-type=oneway&mode=search&trip=oneway&leg1=from:${encodedOrigin},to:${encodedDest},departure:${travelDate}&passengers=children:0,adults:1`;
+        window.open(url, '_blank');
+        break;
+      case 'all':
+        // Open Google and Kayak
+        // We need a slight delay or just open multiple windows. Browsers might block the second one.
+        {
+          const googleUrl = `https://www.google.com/travel/flights?q=Flights+to+${encodedDest}+from+${encodedOrigin}+on+${travelDate}`;
+          const kayakUrl = `https://www.kayak.com/flights/${encodedOrigin}-${encodedDest}/${travelDate}`;
+          window.open(googleUrl, '_blank');
+          setTimeout(() => window.open(kayakUrl, '_blank'), 500);
+        }
         break;
       default:
         return;
     }
+  };
 
-    window.open(url, '_blank');
+  // Destination Data
+  const destinationData = [
+    {
+      city: "Bangkok",
+      image: "/memories/family_pho.jpg",
+      title: "Bangkok: The Tuk-Tuk Tale",
+      memory: "\"The time you negotiated a Tuk-Tuk race for the whole family! Mrs. Sharma held the bags, the kids cheered, and you navigated traffic like a local King.\""
+    },
+    {
+      city: "Paris",
+      image: "/memories/family_drinks.jpg",
+      title: "Paris: The Cafe Chronicle",
+      memory: "\"Remember when Mrs. Sharma found that perfect crepe spot near the Eiffel Tower? You navigated the metro like a local while the kids chased pigeons. Classic.\""
+    },
+    {
+      city: "Tokyo",
+      image: "/memories/dad_metro.jpg",
+      title: "Tokyo: The Sushi Saga",
+      memory: "\"Legend has it you're still the Chopstick Champion of Shibuya. The kids were amazed by the lights, but you were busy negotiating the best deals in Akihabara.\""
+    },
+    {
+      city: "New York",
+      image: "/memories/dad_train.jpg",
+      title: "New York: Taming the Apple",
+      memory: "\"Walking Central Park with the family in tow. You showed the kids where the real business happens on Wall Street, while Mrs. Sharma conquered 5th Avenue.\""
+    },
+    {
+      city: "Istanbul",
+      image: "/memories/dad_dog.jpg",
+      title: "Istanbul: The Bosphorus Baron",
+      memory: "\"Sipping tea on the Europe side, looking at Asia. You explained the history of empires to the kids while Mrs. Sharma found the best spices in the Grand Bazaar.\""
+    },
+    {
+      city: "Seoul",
+      image: "https://images.unsplash.com/photo-1548115184-bc6544d06a58?auto=format&fit=crop&w=800&q=80",
+      title: "Seoul: K-Pop King",
+      memory: "\"Gangnam Style was cool, but your barbecue skills were the real hit. The family explored ancient palaces, and you navigated the subway system better than the locals.\""
+    }
+  ];
+
+  const handleQuickSearch = (city) => {
+    setDestination(city);
+    // Slight delay to allow state to update, or just pass directly
+    // Using direct pass for reliability inside the handler
+    handleSearch('all', city);
   };
 
   return (
@@ -182,7 +238,12 @@ function App() {
           <div className="hero-badge">Verified Legend • Canada's Pride 🇨🇦</div>
           <h1>The World Awaits,<br />Mr. Piyush Sharma.</h1>
           <p>From the bustling streets of Bangkok to the cafes of Paris. The East and West are calling. Mrs. Sharma and the kids are ready for the ultimate tour.</p>
-          <a href="#book" className="cta-button">Compare Flight Prices</a>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <a href="#book" className="cta-button">Compare Flight Prices</a>
+            <button onClick={() => handleQuickSearch("Everywhere")} className="cta-button" style={{ background: 'transparent', border: '2px solid #fff' }}>
+              Explore Anywhere 🌍
+            </button>
+          </div>
         </div>
         <div className="hero-overlay"></div>
       </header>
@@ -268,60 +329,36 @@ function App() {
       <section id="destinations" className="destinations">
         <h2>Legendary Family Tales</h2>
         <div className="destination-grid">
-          <div className="destination-card">
-            <img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=800&q=80" alt="Bangkok" />
-            <div className="card-content">
-              <h3>Bangkok: The Tuk-Tuk Tale</h3>
-              <p style={{ fontSize: '1rem', marginTop: '0.5rem', fontStyle: 'italic' }}>
-                "The time you negotiated a Tuk-Tuk race for the whole family! Mrs. Sharma held the bags, the kids cheered, and you navigated traffic like a local King."
-              </p>
+          {destinationData.map((dest, index) => (
+            <div key={index} className="destination-card">
+              <img src={dest.image} alt={dest.city} />
+              <div className="card-content">
+                <h3>{dest.title}</h3>
+                <p style={{ fontSize: '1rem', marginTop: '0.5rem', fontStyle: 'italic', marginBottom: '1rem' }}>
+                  {dest.memory}
+                </p>
+                <button
+                  onClick={() => handleQuickSearch(dest.city)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '8px',
+                    border: 'none',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    color: '#fff',
+                    cursor: 'pointer',
+                    fontSize: '0.9rem',
+                    fontWeight: '600',
+                    transition: 'all 0.3s ease',
+                    border: '1px solid rgba(255,255,255,0.2)'
+                  }}
+                  onMouseOver={(e) => e.target.style.background = 'rgba(255,255,255,0.2)'}
+                  onMouseOut={(e) => e.target.style.background = 'rgba(255,255,255,0.1)'}
+                >
+                  🚀 Scan Flights to {dest.city}
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="destination-card">
-            <img src="https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?auto=format&fit=crop&w=800&q=80" alt="Paris" />
-            <div className="card-content">
-              <h3>Paris: The Cafe Chronicle</h3>
-              <p style={{ fontSize: '1rem', marginTop: '0.5rem', fontStyle: 'italic' }}>
-                "Remember when Mrs. Sharma found that perfect crepe spot near the Eiffel Tower? You navigated the metro like a local while the kids chased pigeons. Classic."
-              </p>
-            </div>
-          </div>
-          <div className="destination-card">
-            <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80" alt="Tokyo" />
-            <div className="card-content">
-              <h3>Tokyo: The Sushi Saga</h3>
-              <p style={{ fontSize: '1rem', marginTop: '0.5rem', fontStyle: 'italic' }}>
-                "Legend has it you're still the Chopstick Champion of Shibuya. The kids were amazed by the lights, but you were busy negotiating the best deals in Akihabara."
-              </p>
-            </div>
-          </div>
-          <div className="destination-card">
-            <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80" alt="New York" />
-            <div className="card-content">
-              <h3>New York: Taming the Apple</h3>
-              <p style={{ fontSize: '1rem', marginTop: '0.5rem', fontStyle: 'italic' }}>
-                "Walking Central Park with the family in tow. You showed the kids where the real business happens on Wall Street, while Mrs. Sharma conquered 5th Avenue."
-              </p>
-            </div>
-          </div>
-          <div className="destination-card">
-            <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=800&q=80" alt="Istanbul" />
-            <div className="card-content">
-              <h3>Istanbul: The Bosphorus Baron</h3>
-              <p style={{ fontSize: '1rem', marginTop: '0.5rem', fontStyle: 'italic' }}>
-                "Sipping tea on the Europe side, looking at Asia. You explained the history of empires to the kids while Mrs. Sharma found the best spices in the Grand Bazaar."
-              </p>
-            </div>
-          </div>
-          <div className="destination-card">
-            <img src="https://images.unsplash.com/photo-1548115184-bc6544d06a58?auto=format&fit=crop&w=800&q=80" alt="Seoul" />
-            <div className="card-content">
-              <h3>Seoul: K-Pop King</h3>
-              <p style={{ fontSize: '1rem', marginTop: '0.5rem', fontStyle: 'italic' }}>
-                "Gangnam Style was cool, but your barbecue skills were the real hit. The family explored ancient palaces, and you navigated the subway system better than the locals."
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
@@ -364,6 +401,14 @@ function App() {
             </div>
 
             <div style={{ gridColumn: '1 / -1', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
+              <button
+                type="button"
+                onClick={() => handleSearch('all')}
+                className="submit-btn"
+                style={{ background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)', color: '#fff', fontWeight: 'bold', fontSize: '1.1rem' }}
+              >
+                🚀 SCAN ALL
+              </button>
               <button
                 type="button"
                 onClick={() => handleSearch('google')}

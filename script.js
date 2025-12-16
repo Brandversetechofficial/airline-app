@@ -92,7 +92,53 @@ document.addEventListener('DOMContentLoaded', () => {
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            alert("Jet Commandeered! The crew is preparing for your arrival, Mr. Sharma.");
+
+            const originInput = document.getElementById('from').value;
+            const destInput = document.getElementById('to').value;
+            const dateInput = document.getElementById('date').value;
+
+            // Basic validation
+            if (!destInput) {
+                alert("Please enter a destination, Mr. Sharma!");
+                return;
+            }
+
+            // Sanitize Origin (Handle the default value)
+            let origin = originInput;
+            if (origin.includes("Canada") || origin.includes("Home")) {
+                origin = "Toronto";
+            }
+
+            const destination = destInput;
+            const dateParam = dateInput ? ` on ${dateInput}` : "";
+
+            // 1. Open Google Search
+            // Query: "flights from [origin] to [destination] [date]"
+            const googleQuery = encodeURIComponent(`flights from ${origin} to ${destination}${dateParam}`);
+            const googleUrl = `https://www.google.com/search?q=${googleQuery}`;
+            window.open(googleUrl, '_blank');
+
+            // 2. Open Kayak
+            // Kayak URL format attempts: https://www.kayak.com/flights/[origin]-[dest]/[date]
+            // Date format for Kayak is usually YYYY-MM-DD
+            let kayakUrl = "";
+            let kayakDate = "";
+            if (dateInput) {
+                kayakDate = "/" + dateInput;
+            }
+
+            // Kayak needs city names or codes. We'll try passing city names directly.
+            // If we have spaces, Kayak URLs usually handle them or might redirect to a search.
+            // A safer bet for general search is the main search page, but let's try to construct a deeply linked URL.
+            // Format: https://www.kayak.com/flights/Toronto-Paris/2023-11-25
+
+            const originClean = origin.replace(/\s+/g, '-');
+            const destClean = destination.replace(/\s+/g, '-');
+
+            kayakUrl = `https://www.kayak.com/flights/${originClean}-${destClean}${kayakDate}`;
+            window.open(kayakUrl, '_blank');
+
+            alert(`Searching flight options for Mr. Sharma to ${destination}...`);
         });
     }
 });
