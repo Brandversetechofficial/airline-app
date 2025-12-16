@@ -340,21 +340,31 @@ function App() {
                 <button
                   onClick={() => handleQuickSearch(dest.city)}
                   style={{
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    border: 'none',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    color: '#fff',
+                    padding: '0.6rem 1.2rem',
+                    borderRadius: '50px',
+                    border: '1px solid rgba(245, 158, 11, 0.5)',
+                    background: 'rgba(2, 6, 23, 0.6)',
+                    color: '#f59e0b',
                     cursor: 'pointer',
                     fontSize: '0.9rem',
-                    fontWeight: '600',
+                    fontWeight: '700',
                     transition: 'all 0.3s ease',
-                    border: '1px solid rgba(255,255,255,0.2)'
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    backdropFilter: 'blur(4px)'
                   }}
-                  onMouseOver={(e) => e.target.style.background = 'rgba(255,255,255,0.2)'}
-                  onMouseOut={(e) => e.target.style.background = 'rgba(255,255,255,0.1)'}
+                  onMouseOver={(e) => {
+                    e.target.style.background = '#f59e0b';
+                    e.target.style.color = '#000';
+                    e.target.style.boxShadow = '0 0 15px rgba(245, 158, 11, 0.4)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.target.style.background = 'rgba(2, 6, 23, 0.6)';
+                    e.target.style.color = '#f59e0b';
+                    e.target.style.boxShadow = 'none';
+                  }}
                 >
-                  🚀 Scan Flights to {dest.city}
+                  ✈️ Scan Flights to {dest.city}
                 </button>
               </div>
             </div>
